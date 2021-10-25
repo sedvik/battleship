@@ -1,5 +1,5 @@
 import Ship from './Ship.js'
-import { letterMap, convertCoordinatesToIndices } from './util.js'
+import { letterMap, convertCoordinatesToIndices, getHitShipNum, getHitPosition } from './util.js'
 
 function getShipIndices (frontIndices, orientation, length) {
   const indices = []
@@ -69,16 +69,6 @@ function placeShipIndices (grid, indices, shipNumber) {
     const identifier = `${shipIdentifier}-${positionIdentifier}`
     grid[point.col][point.row] = identifier
   })
-}
-
-// Parses a gridSpaceVal (e.g. S0-P0, S2-P3) to extract which ship was hit
-function getHitShipNum (gridSpaceVal) {
-  return parseInt(gridSpaceVal.split('-')[0].slice(1))
-}
-
-// Parses a gridSpaceVal to extract which ship position was hit
-function getHitPosition (gridSpaceVal) {
-  return parseInt(gridSpaceVal.split('-')[1].slice(1))
 }
 
 const gameboardPrototype = {

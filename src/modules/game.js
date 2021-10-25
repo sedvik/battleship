@@ -37,8 +37,8 @@ function extractGameData (gameState) {
   return gameData
 }
 
-function end (winningPlayerNumber) {
-
+function end () {
+  pubSub.publish('gameEnd', extractGameData(gameState))
 }
 
 /*
@@ -60,6 +60,9 @@ function setup () {
     activePlayerGameboard: 0,
     enemyPlayerGameboard: 1
   }
+
+  // Publish that setup has started
+  pubSub.publish('setupStart', extractGameData(gameState))
 
   // Populate both gameboards with ships
   // EVENTUALLY PUT A RANDOM SHIP PLACEMENT FUNCTION INTO GAMEBOARD FACTORY
@@ -93,8 +96,7 @@ function placeShip (gameboard, coordinate, orientation, length) {
 
 function start () {
   // publish event to render game boards so the game can start
-  const gameData = extractGameData(gameState)
-  pubSub.publish('data', gameData)
+  pubSub.publish('gameStart', extractGameData(gameState))
 }
 
 // Plays a single round of battleship
@@ -102,6 +104,7 @@ function playRound (coordinate) {
   const activePlayer = gameState.players[gameState.activePlayer]
   const enemyGameboard = gameState.gameboards[gameState.enemyPlayerGameboard]
 
+  // Attack the enemy gameboard
   if (activePlayer.isComputer) {
     activePlayer.randomAttack(enemyGameboard, Math.random)
   } else {
@@ -110,9 +113,7 @@ function playRound (coordinate) {
 
   // Check if there is a winner after attacking
   if (enemyGameboard.allShipsSunk()) {
-    // publish game state
-    // PUBLISH HERE
-    return end(gameState.activePlayer)
+    return end()
   }
 
   // Switch active players and gameboards
@@ -120,9 +121,9 @@ function playRound (coordinate) {
   switchGameboards()
 
   // Publish game state
-  // PUBLISH HERE
+  pubSub.publish('roundPlayed', extractGameData(gameState))
 
-  // If the computer is now the active player, schedule its next attack
+  // If a computer is now the active player, schedule its next play at least 1sec from now
   if (activePlayer.isComputer) {
     setTimeout(playRound, 1000)
   }
