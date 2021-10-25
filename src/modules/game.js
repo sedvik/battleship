@@ -28,9 +28,7 @@ function switchGameboards () {
 }
 
 function extractGameData (gameState) {
-  // Extract player 0's (human player) enemyGridTracker and their own gameboard
-
-  // NEED TO CONVERT GAMEBOARD GRID TO GRID TRACKER THAT ONLY SHOWS SYMBOLS AND NO S0-P1, ETC.
+  // Extract player 0's (human player) enemyGridTracker and their own grid tracker
   const gameData = {
     playerGridTracker: convertGameboardToTracker(gameState.gameboards[0]),
     enemyGridTracker: gameState.players[0].enemyGridTracker
@@ -99,7 +97,8 @@ function start () {
   pubSub.publish('data', gameData)
 }
 
-function attack (coordinate) {
+// Plays a single round of battleship
+function playRound (coordinate) {
   const activePlayer = gameState.players[gameState.activePlayer]
   const enemyGameboard = gameState.gameboards[gameState.enemyPlayerGameboard]
 
@@ -125,7 +124,7 @@ function attack (coordinate) {
 
   // If the computer is now the active player, schedule its next attack
   if (activePlayer.isComputer) {
-    setTimeout(attack, 1000)
+    setTimeout(playRound, 1000)
   }
 }
 
@@ -133,7 +132,7 @@ const game = {
   setup,
   placeShip,
   start,
-  attack
+  playRound
 }
 
 export default game
