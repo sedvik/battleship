@@ -46,4 +46,64 @@ function convertIndicesToCoordinates (colIndex, rowIndex, indexMap) {
   return colLetter + row.toString()
 }
 
-export { letterMap, indexMap, convertCoordinatesToIndices, convertIndicesToCoordinates }
+// Parses a gridSpaceVal (e.g. S0-P0, S2-P3) to extract which ship was hit
+function getHitShipNum (gridSpaceVal) {
+  return parseInt(gridSpaceVal.split('-')[0].slice(1))
+}
+
+// Parses a gridSpaceVal to extract which ship position was hit
+function getHitPosition (gridSpaceVal) {
+  return parseInt(gridSpaceVal.split('-')[1].slice(1))
+}
+
+// This function accepts a gameboard object and parses it to return a tracker that shows unhit ship positions, hit ship positions, and missed locations
+function convertGameboardToTracker (gameboard) {
+  const gameboardGrid = gameboard.grid
+  const ships = gameboard.ships
+
+  const tracker = [
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '', '', '', '']
+  ]
+
+  // Iterate through gameboardGrid and parse things like 'miss' into '/' and hits into 'X'. 'S' represents an unhit ship part
+  gameboardGrid.forEach((col, colIndex) => {
+    col.forEach((gridSpaceVal, rowIndex) => {
+      if (gridSpaceVal === 'miss') {
+        // If grid space is marked as miss, mark a '/' in the tracker
+        tracker[colIndex][rowIndex] = '/'
+      } else if (gridSpaceVal !== '') {
+        // If grid space is not empty, it must contain a ship
+        const shipNum = getHitShipNum(gridSpaceVal)
+        const shipPos = getHitPosition(gridSpaceVal)
+
+        // Check if the ship has been hit at the given position
+        if (ships[shipNum].hitMap[shipPos] === 'intact') {
+          tracker[colIndex][rowIndex] = 'S'
+        } else if (ships[shipNum].hitMap[shipPos] === 'hit') {
+          tracker[colIndex][rowIndex] = 'X'
+        }
+      }
+    })
+  })
+
+  return tracker
+}
+
+export {
+  letterMap,
+  indexMap,
+  convertCoordinatesToIndices,
+  convertIndicesToCoordinates,
+  getHitShipNum,
+  getHitPosition,
+  convertGameboardToTracker
+}
