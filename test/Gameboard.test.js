@@ -351,3 +351,40 @@ describe('allShipsSunk() method', () => {
     expect(gameboard.allShipsSunk()).toBe(true)
   })
 })
+
+describe('allShipsPlaced() method', () => {
+  let gameboard
+
+  beforeEach(() => {
+    gameboard = Gameboard()
+  })
+
+  test('allShipsPlaced method exists on the object\'s prototype', () => {
+    expect(Object.prototype.hasOwnProperty.call(gameboard, 'allShipsPlaced')).toBe(false)
+    expect(typeof gameboard.allShipsPlaced).toBe('function')
+  })
+
+  test('returns false when no ships have been placed', () => {
+    expect(gameboard.allShipsPlaced()).toBe(false)
+  })
+
+  test('returns false when a portion of available ships have been placed', () => {
+    gameboard.placeShip('A1', 'horizontal', 5)
+    gameboard.placeShip('F6', 'vertical', 3)
+
+    // Should return false since 5 ships remain to be placed
+    expect(gameboard.allShipsPlaced()).toBe(false)
+  })
+
+  test('returns true when all ships have been placed', () => {
+    gameboard.placeShip('A1', 'horizontal', 5)
+    gameboard.placeShip('B5', 'vertical', 4)
+    gameboard.placeShip('F6', 'vertical', 3)
+    gameboard.placeShip('F3', 'horizontal', 2)
+    gameboard.placeShip('J9', 'vertical', 2)
+    gameboard.placeShip('D6', 'vertical', 1)
+    gameboard.placeShip('I2', 'horizontal', 1)
+
+    expect(gameboard.allShipsPlaced()).toBe(true)
+  })
+})

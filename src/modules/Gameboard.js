@@ -137,6 +137,10 @@ const gameboardPrototype = {
     return this.ships.every(ship => {
       return ship.isSunk()
     })
+  },
+
+  allShipsPlaced: function () {
+    return Object.keys(this.placeableShips).every(key => this.placeableShips[key] === 0)
   }
 }
 
