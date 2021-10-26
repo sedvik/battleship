@@ -11,5 +11,351 @@
   <header>
     <h1>Battleship</h1>
   </header>
+  <main>
+    <div id="content">
+      <div id="instructions">
+        <p>Place all ships and then press Start</p>
+      </div>
+      <div class="player grid">
+        <div class="col">
+          <div class="label space"></div>
+          <div class="label space">1</div>
+          <div class="label space">2</div>
+          <div class="label space">3</div>
+          <div class="label space">4</div>
+          <div class="label space">5</div>
+          <div class="label space">6</div>
+          <div class="label space">7</div>
+          <div class="label space">8</div>
+          <div class="label space">9</div>
+          <div class="label space">10</div>
+        </div>
+        <div class="col">
+          <div class="label space">A</div>
+          <div class="ship space"></div>
+          <div class="hit-ship space">X</div>
+          <div class="ship space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">B</div>
+          <div class="empty space"></div>
+          <div class="empty space">/</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">C</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">D</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">E</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">F</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">G</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">H</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">I</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">J</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+      </div>
+  
+      <!-- <br>
+      <h2>Enemy Grid</h2>
+      <div class="opponent grid">
+        <div class="col">
+          <div class="label space"></div>
+          <div class="label space">1</div>
+          <div class="label space">2</div>
+          <div class="label space">3</div>
+          <div class="label space">4</div>
+          <div class="label space">5</div>
+          <div class="label space">6</div>
+          <div class="label space">7</div>
+          <div class="label space">8</div>
+          <div class="label space">9</div>
+          <div class="label space">10</div>
+        </div>
+        <div class="col">
+          <div class="label space">A</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="hit-ship space">X</div>
+          <div class="hit-ship space">X</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space">/</div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">B</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">C</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">D</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">E</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">F</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">G</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">H</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">I</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+        <div class="col">
+          <div class="label space">J</div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+          <div class="empty space"></div>
+        </div>
+      </div> -->
+      <div id="setup-btns">
+        <button>Reset Board</button>
+        <button>Randomize Ship Placement</button>
+      </div>
+      
+      <div id="ship-placement">
+        <div id="ship0" class="ship-card">
+          <div class="ship-img">
+            <div class="small ship space"></div>
+            <div class="small ship space"></div>
+            <div class="small ship space"></div>
+            <div class="small ship space"></div>
+            <div class="small ship space"></div>
+          </div>
+          <form>
+            <input id="0-vertical" name="0-orientation" type="radio" required>
+            <label for="0-vertical">Vertical</label>
+            <input id="0-horizontal" name="0-orientation" type="radio" required>
+            <label for="0-horizontal">Horizontal</label>
+            <br>
+            <label for="0-coordinate">Coordinate</label>
+            <input id="0-coordinate" type="text" name="0-coordinate" required>
+            <br>
+            <button>Place Ship</button>
+          </form>
+        </div>
+        <div id="ship1" class="ship-card">
+          <div class="ship-img">
+            <div class="small ship space"></div>
+            <div class="small ship space"></div>
+            <div class="small ship space"></div>
+            <div class="small ship space"></div>
+          </div>
+          <form>
+            <input id="1-vertical" name="1-orientation" type="radio" required>
+            <label for="1-vertical">Vertical</label>
+            <input id="1-horizontal" name="1-orientation" type="radio" required>
+            <label for="1-horizontal">Horizontal</label>
+            <br>
+            <label for="1-coordinate">Coordinate</label>
+            <input id="1-coordinate" type="text" name="1-coordinate" required>
+            <br>
+            <button>Place Ship</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
