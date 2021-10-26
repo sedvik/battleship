@@ -31,6 +31,7 @@ function extractGameData (gameState) {
   // Extract player 0's (human player) enemyGridTracker and their own grid tracker
   const gameData = {
     playerGridTracker: convertGameboardToTracker(gameState.gameboards[0]),
+    placeableShips: gameState.gameboards[0].placeableShips,
     enemyGridTracker: gameState.players[0].enemyGridTracker
   }
 
@@ -64,34 +65,20 @@ function setup () {
   // Publish that setup has started
   pubSub.publish('setupStart', extractGameData(gameState))
 
-  // Populate both gameboards with ships
-  // EVENTUALLY PUT A RANDOM SHIP PLACEMENT FUNCTION INTO GAMEBOARD FACTORY
-
-  const p0Gameboard = gameState.gameboards[0]
+  // Populate p1Gameboard gameboards with ships
   const p1Gameboard = gameState.gameboards[1]
-
-  // Place player 0's ships
-  placeShip(p0Gameboard, 'B6', 'vertical', 5)
-  placeShip(p0Gameboard, 'J2', 'vertical', 4)
-  placeShip(p0Gameboard, 'B3', 'horizontal', 3)
-  placeShip(p0Gameboard, 'E8', 'vertical', 2)
-  placeShip(p0Gameboard, 'G8', 'vertical', 2)
-  placeShip(p0Gameboard, 'F4', 'vertical', 1)
-  placeShip(p0Gameboard, 'J10', 'vertical', 1)
-
-  // Place Player 1's ships
-  placeShip(p1Gameboard, 'B5', 'vertical', 5)
-  placeShip(p1Gameboard, 'G1', 'horizontal', 4)
-  placeShip(p1Gameboard, 'J4', 'vertical', 3)
-  placeShip(p1Gameboard, 'E5', 'horizontal', 2)
-  placeShip(p1Gameboard, 'G10', 'horizontal', 2)
-  placeShip(p1Gameboard, 'A2', 'vertical', 1)
-  placeShip(p1Gameboard, 'D10', 'vertical', 1)
+  p1Gameboard.randomlyPlaceShips(Math.random)
 }
 
-function placeShip (gameboard, coordinate, orientation, length) {
+function placeShip (coordinate, orientation, length) {
+  const gameboard = gameState.gameboards[0]
   gameboard.placeShip(coordinate, orientation, length)
   pubSub.publish('shipPlaced', extractGameData(gameState))
+}
+
+function randomizeShips () {
+  const gameboard = gameState.gameboards[0]
+  gameboard.randomlyPlaceShips(Math.random)
 }
 
 function start () {
@@ -132,6 +119,7 @@ function playRound (coordinate) {
 const game = {
   setup,
   placeShip,
+  randomizeShips,
   start,
   playRound
 }
