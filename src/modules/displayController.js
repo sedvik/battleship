@@ -1,8 +1,8 @@
 import pubSub from './pubSub'
 
 // Renders setup of first player's board
-function renderSetup (data) {
-  console.log('Setup', data)
+function renderSetup ({ placeableShips, playerGridTracker }) {
+  console.log({ placeableShips, playerGridTracker })
 }
 
 // Renders main battleship game, including player's board and tracker of enemy's grid
@@ -17,6 +17,12 @@ function renderEnd (data) {
 
 function renderMessage (message) {
   console.log(message)
+}
+
+function render (view) {
+  const main = document.querySelector('main')
+  main.textContent = ''
+  main.appendChild(view)
 }
 
 function init () {
