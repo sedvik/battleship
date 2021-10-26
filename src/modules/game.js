@@ -72,8 +72,13 @@ function setup () {
 
 function placeShip (coordinate, orientation, length) {
   const gameboard = gameState.gameboards[0]
-  gameboard.placeShip(coordinate, orientation, length)
-  pubSub.publish('shipPlaced', extractGameData(gameState))
+
+  try {
+    gameboard.placeShip(coordinate, orientation, length)
+    pubSub.publish('shipPlaced', extractGameData(gameState))
+  } catch (err) {
+    pubSub.publish('alert', 'Invalid ship position')
+  }
 }
 
 function randomizeShips () {
@@ -90,6 +95,8 @@ function start () {
   if (p0Gameboard.allShipsPlaced() && p1Gameboard.allShipsPlaced()) {
     // publish event to render game boards so the game can start
     pubSub.publish('gameStart', extractGameData(gameState))
+  } else {
+    pubSub.publish('alert', 'All ships must be placed before the game can start')
   }
 }
 

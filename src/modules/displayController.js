@@ -15,12 +15,17 @@ function renderEnd (data) {
   console.log('End', data)
 }
 
+function renderMessage (message) {
+  console.log(message)
+}
+
 function init () {
   pubSub.subscribe('setupStart', renderSetup)
   pubSub.subscribe('shipPlaced', renderSetup)
   pubSub.subscribe('gameStart', renderMain)
   pubSub.subscribe('roundPlayed', renderMain)
   pubSub.subscribe('gameEnd', renderEnd)
+  pubSub.subscribe('alert', renderMessage)
 }
 
 const displayController = {
