@@ -79,11 +79,18 @@ function placeShip (coordinate, orientation, length) {
 function randomizeShips () {
   const gameboard = gameState.gameboards[0]
   gameboard.randomlyPlaceShips(Math.random)
+  pubSub.publish('shipPlaced', extractGameData(gameState))
 }
 
 function start () {
-  // publish event to render game boards so the game can start
-  pubSub.publish('gameStart', extractGameData(gameState))
+  // Check if all ships have been placed for both gameboards
+  const p0Gameboard = gameState.gameboards[0]
+  const p1Gameboard = gameState.gameboards[1]
+
+  if (p0Gameboard.allShipsPlaced() && p1Gameboard.allShipsPlaced()) {
+    // publish event to render game boards so the game can start
+    pubSub.publish('gameStart', extractGameData(gameState))
+  }
 }
 
 // Plays a single round of battleship
