@@ -1,4 +1,4 @@
-import { test, expect, describe, beforeEach } from '@jest/globals'
+import { test, expect, describe, beforeEach, jest } from '@jest/globals'
 import Gameboard from '../src/modules/Gameboard.js'
 
 describe('Gameboard grid', () => {
@@ -386,5 +386,130 @@ describe('allShipsPlaced() method', () => {
     gameboard.placeShip('I2', 'horizontal', 1)
 
     expect(gameboard.allShipsPlaced()).toBe(true)
+  })
+})
+
+describe('randomlyPlaceShips() method', () => {
+  let gameboard
+
+  beforeEach(() => {
+    gameboard = Gameboard()
+  })
+
+  test('randomlyPlaceShips method exists on the object\'s prototype', () => {
+    expect(Object.prototype.hasOwnProperty.call(gameboard, 'randomlyPlaceShips')).toBe(false)
+    expect(typeof gameboard.randomlyPlaceShips).toBe('function')
+  })
+
+  test('when called on gameboard with 1 ship remaining to be placed, the last ship is placed on the gameboard', () => {
+    gameboard.placeShip('A1', 'vertical', 5)
+    gameboard.placeShip('C1', 'vertical', 4)
+    gameboard.placeShip('E1', 'vertical', 3)
+    gameboard.placeShip('G1', 'vertical', 2)
+    gameboard.placeShip('I1', 'vertical', 2)
+    gameboard.placeShip('E5', 'vertical', 1)
+
+    const mockMathRandom = jest.fn()
+    // These mock random results will result in a position colIndex of 9 and rowIndex of 8 (J9)
+    mockMathRandom.mockReturnValueOnce(0.93)
+    mockMathRandom.mockReturnValueOnce(0.84)
+
+    // This mock random result determines results in a vertical ship
+    mockMathRandom.mockReturnValueOnce(0.42)
+
+    // Place remaining ship
+    gameboard.randomlyPlaceShips(mockMathRandom)
+
+    expect(gameboard.allShipsPlaced()).toBe(true)
+    expect(mockMathRandom.mock.calls).toHaveLength(3)
+  })
+
+  test('when called on gameboard with 1 ship to be placed, generates random coordinate and orientation until a suitable position is found', () => {
+    gameboard.placeShip('A1', 'vertical', 5)
+    gameboard.placeShip('C1', 'vertical', 4)
+    gameboard.placeShip('E1', 'vertical', 3)
+    gameboard.placeShip('G1', 'vertical', 2)
+    gameboard.placeShip('I1', 'vertical', 2)
+    gameboard.placeShip('E5', 'vertical', 1)
+
+    const mockMathRandom = jest.fn()
+    // These mock random results will result in a position colIndex of 0 and rowIndex of 0 (A1), which won't work
+    mockMathRandom.mockReturnValueOnce(0.05)
+    mockMathRandom.mockReturnValueOnce(0.09)
+
+    // This mock random result determines results in a vertical ship
+    mockMathRandom.mockReturnValueOnce(0.33)
+
+    // These mockMathRandom calls will take place when placing at A1 won't work. Places a vertical ship of length 1 at J9
+    mockMathRandom.mockReturnValueOnce(0.93)
+    mockMathRandom.mockReturnValueOnce(0.84)
+    mockMathRandom.mockReturnValueOnce(0.21)
+
+    gameboard.randomlyPlaceShips(mockMathRandom)
+
+    expect(gameboard.allShipsPlaced()).toBe(true)
+    expect(mockMathRandom.mock.calls).toHaveLength(6)
+    expect(gameboard.grid[9][8]).toBe('S6-P0')
+  })
+
+  test('places all 7 placeable ships on an empty board', () => {
+    // Prepare mock random values
+    const mockMathRandom = jest.fn()
+
+    // Coordinate: G9 / Orientation: horizontal / Length: 1
+    mockMathRandom.mockReturnValueOnce(0.64)
+    mockMathRandom.mockReturnValueOnce(0.89)
+    mockMathRandom.mockReturnValueOnce(0.93)
+
+    // Coordinate: J9/ Orientation: vertical / Length: 1
+    mockMathRandom.mockReturnValueOnce(0.96)
+    mockMathRandom.mockReturnValueOnce(0.82)
+    mockMathRandom.mockReturnValueOnce(0.23)
+
+    // Coordinate: C6 / Orientation: horizontal  / Length: 2
+    mockMathRandom.mockReturnValueOnce(0.28)
+    mockMathRandom.mockReturnValueOnce(0.51)
+    mockMathRandom.mockReturnValueOnce(0.66)
+
+    // Coordinate: H4 / Orientation: vertical  / Length: 2
+    mockMathRandom.mockReturnValueOnce(0.75)
+    mockMathRandom.mockReturnValueOnce(0.31)
+    mockMathRandom.mockReturnValueOnce(0.18)
+
+    // Coordinate: B1 / Orientation: horizontal  / Length: 3
+    mockMathRandom.mockReturnValueOnce(0.13)
+    mockMathRandom.mockReturnValueOnce(0.07)
+    mockMathRandom.mockReturnValueOnce(0.79)
+
+    // Coordinate: F2 / Orientation: vertical  / Length: 4
+    mockMathRandom.mockReturnValueOnce(0.52)
+    mockMathRandom.mockReturnValueOnce(0.19)
+    mockMathRandom.mockReturnValueOnce(0.44)
+
+    // Bad coordinate - overlapping previous ship: Coordinate: C6 / Orientation: vertical  / Length: 5
+    mockMathRandom.mockReturnValueOnce(0.22)
+    mockMathRandom.mockReturnValueOnce(0.55)
+    mockMathRandom.mockReturnValueOnce(0.05)
+
+    // Regenerated coordinates for 5 length ship: Coordinate: A8 / Orientation: horizontal / Length: 5
+    mockMathRandom.mockReturnValueOnce(0.09)
+    mockMathRandom.mockReturnValueOnce(0.82)
+    mockMathRandom.mockReturnValueOnce(0.91)
+
+    // Randomly place ships
+    gameboard.randomlyPlaceShips(mockMathRandom)
+
+    // Check that ship positions are as expected
+    const grid = gameboard.grid
+    expect(grid[6][8]).toBe('S0-P0')
+    expect(grid[9][8]).toBe('S1-P0')
+    expect(grid[2][5]).toBe('S2-P0')
+    expect(grid[7][3]).toBe('S3-P0')
+    expect(grid[1][0]).toBe('S4-P0')
+    expect(grid[5][1]).toBe('S5-P0')
+    expect(grid[0][8]).toBe('S6-P0')
+
+    // Check that mockMathRandom was called expected number of times
+    expect(mockMathRandom.mock.calls).toHaveLength(24)
   })
 })

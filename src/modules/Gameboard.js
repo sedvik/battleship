@@ -1,5 +1,5 @@
 import Ship from './Ship.js'
-import { letterMap, convertCoordinatesToIndices, getHitShipNum, getHitPosition } from './util.js'
+import { letterMap, indexMap, convertCoordinatesToIndices, convertIndicesToCoordinates, getHitShipNum, getHitPosition } from './util.js'
 
 function getShipIndices (frontIndices, orientation, length) {
   const indices = []
@@ -141,6 +141,32 @@ const gameboardPrototype = {
 
   allShipsPlaced: function () {
     return Object.keys(this.placeableShips).every(key => this.placeableShips[key] === 0)
+  },
+
+  randomlyPlaceShips: function (mathRandomFn) {
+    while (!this.allShipsPlaced()) {
+      // Randomly generate col and row indices
+      const colIndex = Math.floor(mathRandomFn() * 10)
+      const rowIndex = Math.floor(mathRandomFn() * 10)
+
+      // Convert to coordinates
+      const coordinate = convertIndicesToCoordinates(colIndex, rowIndex, indexMap)
+
+      // Randomly generate whether the ship will be horizontal or vertical
+      const orientation = mathRandomFn() < 0.5 ? 'vertical' : 'horizontal'
+
+      // Pick a ship length that still needs to be placed
+      const length = parseInt(Object.keys(this.placeableShips).find(key => {
+        return this.placeableShips[key] > 0
+      }))
+
+      // Attempt to place a ship at this position
+      try {
+        this.placeShip(coordinate, orientation, length)
+      } catch (err) {
+
+      }
+    }
   }
 }
 
