@@ -56,6 +56,30 @@ describe('Gameboard ships', () => {
   })
 })
 
+describe('placeableShips property', () => {
+  let gameboard
+
+  beforeEach(() => {
+    gameboard = Gameboard()
+  })
+
+  test('has a placeableShips property', () => {
+    expect(gameboard.placeableShips).not.toBeUndefined()
+  })
+
+  test('initializes to the correct initial object', () => {
+    const expectedObj = {
+      5: 1,
+      4: 1,
+      3: 1,
+      2: 2,
+      1: 2
+    }
+
+    expect(gameboard.placeableShips).toEqual(expectedObj)
+  })
+})
+
 describe('placeShip() method', () => {
   let gameboard
 
@@ -139,6 +163,14 @@ describe('placeShip() method', () => {
     expect(gameboard.ships).toHaveLength(3)
   })
 
+  test('num ships available for a given length decreases by 1 when a ship with that length is placed', () => {
+    const initialAvailableShips = gameboard.placeableShips[3]
+    const expectedAvailableShips = initialAvailableShips - 1
+    gameboard.placeShip('A1', 'horizontal', 3)
+
+    expect(gameboard.placeableShips[3]).toBe(expectedAvailableShips)
+  })
+
   test('placeShip should throw an error if multiple ships are placed at the same position', () => {
     gameboard.placeShip('A1', 'vertical', 1)
 
@@ -170,6 +202,14 @@ describe('placeShip() method', () => {
   test('placeShip should throw an error if tail of ship is attempted to be placed horizontally out-of-bounds', () => {
     // K7 does not exist
     expect(() => gameboard.placeShip('G7', 'horizontal', 5)).toThrow('Invalid ship position')
+  })
+
+  test('placeShips throws an error if a ship is attempted to be placed that is not available per placeableShips property', () => {
+    // Place 1st and only ship of length 5
+    gameboard.placeShip('A1', 'vertical', 5)
+
+    // Attempt to place another ship of length 5 should throw an error
+    expect(() => gameboard.placeShip('H4', 'vertical', 5)).toThrow('No ships of this length are available')
   })
 })
 

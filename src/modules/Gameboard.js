@@ -84,6 +84,11 @@ const gameboardPrototype = {
       throw new Error('Invalid ship position')
     }
 
+    // Check placeableShips property to see if the given ship length is available to be placed
+    if (this.placeableShips[length] <= 0) {
+      throw new Error('No ships of this length are available')
+    }
+
     // The new ship number is equal to the length of the gameboard ships property
     const shipNumber = this.ships.length
 
@@ -93,6 +98,9 @@ const gameboardPrototype = {
     // Create the new ship and add it to ships array
     const newShip = Ship(length)
     this.ships.push(newShip)
+
+    // Decrement applicable placeableShips property
+    this.placeableShips[length] = this.placeableShips[length] - 1
   },
 
   receiveAttack: function (coordinate) {
@@ -145,12 +153,21 @@ function Gameboard () {
     ['', '', '', '', '', '', '', '', '', ''],
     ['', '', '', '', '', '', '', '', '', '']
   ]
-
   const ships = []
+
+  // placeableShips represents a mapping of ship length to number of ships remaining that can be placed with that length
+  const placeableShips = {
+    5: 1,
+    4: 1,
+    3: 1,
+    2: 2,
+    1: 2
+  }
 
   return Object.assign(Object.create(gameboardPrototype), {
     grid,
-    ships
+    ships,
+    placeableShips
   })
 }
 
