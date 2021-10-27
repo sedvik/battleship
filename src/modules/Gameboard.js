@@ -25,8 +25,13 @@ function getShipIndices (frontIndices, orientation, length) {
  * 2. Any provided index is less than 0
  * 3. Any provided index is greater than the grid length minus 1
  * 4. Any of the indices aren't of type number
+ * 5. Indices is of length 0
  */
 function invalidPosition (grid, indices) {
+  if (indices.length === 0) {
+    return true
+  }
+
   return indices.some(point => {
     return (
       typeof point.col !== 'number' ||
