@@ -315,7 +315,7 @@
       </div>
       
       <div id="ship-placement">
-        <div id="ship0" class="ship-card">
+        <div id="ship0" class="ship-card" data-length="5">
           <div class="ship-img">
             <div class="small ship space"></div>
             <div class="small ship space"></div>
@@ -324,7 +324,7 @@
             <div class="small ship space"></div>
           </div>
           <form>
-            <input id="0-vertical" name="0-orientation" type="radio" required>
+            <input id="0-vertical" name="0-orientation" type="radio" required checked>
             <label for="0-vertical">Vertical</label>
             <input id="0-horizontal" name="0-orientation" type="radio" required>
             <label for="0-horizontal">Horizontal</label>
@@ -332,10 +332,10 @@
             <label for="0-coordinate">Coordinate</label>
             <input id="0-coordinate" type="text" name="0-coordinate" required>
             <br>
-            <button>Place Ship</button>
+            <button class="place-ship">Place Ship</button>
           </form>
         </div>
-        <div id="ship1" class="ship-card">
+        <div id="ship1" class="ship-card" data-length="4">
           <div class="ship-img">
             <div class="small ship space"></div>
             <div class="small ship space"></div>
@@ -343,7 +343,7 @@
             <div class="small ship space"></div>
           </div>
           <form>
-            <input id="1-vertical" name="1-orientation" type="radio" required>
+            <input id="1-vertical" name="1-orientation" type="radio" required checked>
             <label for="1-vertical">Vertical</label>
             <input id="1-horizontal" name="1-orientation" type="radio" required>
             <label for="1-horizontal">Horizontal</label>
@@ -351,9 +351,13 @@
             <label for="1-coordinate">Coordinate</label>
             <input id="1-coordinate" type="text" name="1-coordinate" required>
             <br>
-            <button>Place Ship</button>
+            <button class="place-ship">Place Ship</button>
           </form>
         </div>
+      </div>
+
+      <div id="start-btn-container">
+        <button id="start-btn">Start</button>
       </div>
     </div>
   </main>
