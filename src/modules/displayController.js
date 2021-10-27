@@ -20,7 +20,8 @@ function renderEnd (data) {
 }
 
 function renderMessage (message) {
-  console.log(message)
+  const instructionsP = document.querySelector('#instructions p')
+  instructionsP.textContent = message
 }
 
 function render (view) {
