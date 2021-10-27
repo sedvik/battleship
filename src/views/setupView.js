@@ -198,7 +198,7 @@ function createStartBtnDiv (placeableShips) {
 
   // If there are no more placeable ships, add the start button
   if (Object.keys(placeableShips).every(key => placeableShips[key] === 0)) {
-    const startBtn = domUtil.create('button', '', {
+    const startBtn = domUtil.create('button', 'Start', {
       id: 'start-btn'
     })
     startBtnContainer.appendChild(startBtn)
