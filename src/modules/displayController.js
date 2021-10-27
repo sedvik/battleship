@@ -6,7 +6,7 @@ function renderSetup ({ placeableShips, playerGridTracker }) {
   console.log({ placeableShips, playerGridTracker })
   const setupView = createSetupView(placeableShips, playerGridTracker)
   render(setupView)
-  // pubSub.publish('setupRendered')
+  pubSub.publish('setupRendered')
 }
 
 // Renders main battleship game, including player's board and tracker of enemy's grid
