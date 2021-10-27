@@ -37,7 +37,8 @@ function createShipForm (idNum) {
       name: `${idNum}-orientation`,
       type: 'radio',
       required: 'required',
-      checked: 'checked'
+      checked: 'checked',
+      value: 'vertical'
     }
   })
   const verticalLabel = domUtil.create('label', 'Vertical', {
@@ -50,7 +51,8 @@ function createShipForm (idNum) {
     attributes: {
       name: `${idNum}-orientation`,
       type: 'radio',
-      required: 'required'
+      required: 'required',
+      value: 'horizontal'
     }
   })
   const horizontalLabel = domUtil.create('label', 'Horizontal', {
