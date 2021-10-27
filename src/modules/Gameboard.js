@@ -19,13 +19,45 @@ function getShipIndices (frontIndices, orientation, length) {
   return indices
 }
 
+// Returns true if a ship is already directly next to or kitty-corner from specified position
+function isShipNearby (grid, colIndex, rowIndex) {
+  // Get adjacent and kitty-corner points
+  const upperLeft = { col: colIndex - 1, row: rowIndex - 1 }
+  const left = { col: colIndex - 1, row: rowIndex }
+  const bottomLeft = { col: colIndex - 1, row: rowIndex + 1 }
+  const upper = { col: colIndex, row: rowIndex - 1 }
+  const bottom = { col: colIndex, row: rowIndex + 1 }
+  const upperRight = { col: colIndex + 1, row: rowIndex - 1 }
+  const right = { col: colIndex + 1, row: rowIndex }
+  const bottomRight = { col: colIndex + 1, row: rowIndex + 1 }
+
+  const testPoints = [
+    upperLeft,
+    left,
+    bottomLeft,
+    upper,
+    bottom,
+    upperRight,
+    right,
+    bottomRight
+  ]
+
+  // Filter test points to only include columns or rows within the grid boundaries
+  const filteredTestPoints = testPoints.filter(point => {
+    return (point.col >= 0 && point.col <= 9) && (point.row >= 0 && point.row <= 9)
+  })
+
+  return filteredTestPoints.some(point => grid[point.col][point.row] !== '')
+}
+
 /*
  * Position specified is invalid if any of the following conditions are met:
  * 1. Any of the positions specified are not empty on the grid
- * 2. Any provided index is less than 0
- * 3. Any provided index is greater than the grid length minus 1
- * 4. Any of the indices aren't of type number
- * 5. Indices is of length 0
+ * 2. Any of the positions are directly adjacent/kitty-corner to another ship
+ * 3. Any provided index is less than 0
+ * 4. Any provided index is greater than the grid length minus 1
+ * 5. Any of the indices aren't of type number
+ * 6. Indices is of length 0
  */
 function invalidPosition (grid, indices) {
   if (indices.length === 0) {
@@ -36,6 +68,7 @@ function invalidPosition (grid, indices) {
     return (
       typeof point.col !== 'number' ||
       typeof point.row !== 'number' ||
+      isShipNearby(grid, point.col, point.row) ||
       point.col < 0 ||
       point.col > grid.length - 1 ||
       point.row < 0 ||

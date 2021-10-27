@@ -184,6 +184,18 @@ describe('placeShip() method', () => {
     expect(() => gameboard.placeShip('A2', 'horizontal', 3)).toThrow('Invalid ship position')
   })
 
+  test('placeShip should throw an error if a ship is placed directly adjacent to another ship', () => {
+    gameboard.placeShip('D2', 'vertical', 5)
+
+    expect(() => gameboard.placeShip('E3', 'vertical', 3)).toThrow('Invalid ship position')
+  })
+
+  test('placeShip should throw an error if a ship is placed kitty-corner to another ship', () => {
+    gameboard.placeShip('D2', 'vertical', 5)
+
+    expect(() => gameboard.placeShip('E1', 'horizontal', 3)).toThrow('Invalid ship position')
+  })
+
   test('placeShip should throw an error if a ship is attempted to be placed out-of-bounds from the top', () => {
     // A0 doesn't exist
     expect(() => gameboard.placeShip('A0', 'vertical', 3)).toThrow('Invalid ship position')
