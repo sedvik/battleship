@@ -146,3 +146,16 @@ main {
 .ship-card form input[type="text"] {
   width: 25px;
 }
+
+/* Start Button */
+#start-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+#start-btn {
+  height: 50px;
+  width: 80px;
+  font-size: 1.3rem;
+}
