@@ -74,7 +74,10 @@ function createShipForm (idNum) {
   })
   const lineBreak2 = domUtil.create('br', '')
   const placeShipBtn = domUtil.create('button', 'Place Ship', {
-    class: 'place-ship'
+    class: 'place-ship',
+    attributes: {
+      type: 'button'
+    }
   })
 
   const children = [
