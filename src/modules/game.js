@@ -62,6 +62,11 @@ function setup () {
     enemyPlayerGameboard: 1
   }
 
+  // TEMPORARY FOR TESTING
+  const p0Gameboard = gameState.gameboards[0]
+  p0Gameboard.randomlyPlaceShips(Math.random)
+  // TEMPORARY
+
   // Publish that setup has started
   pubSub.publish('setupStart', extractGameData(gameState))
 

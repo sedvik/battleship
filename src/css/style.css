@@ -87,6 +87,10 @@ main {
   background-color: rgb(247, 34, 34);
 }
 
+.miss {
+  background-color:lightcyan;
+}
+
 /* Setup buttons */
 #setup-btns {
   display: flex;
