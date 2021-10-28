@@ -3,7 +3,6 @@ import createSetupView from '../views/setupView.js'
 
 // Renders setup of first player's board
 function renderSetup ({ placeableShips, playerGridTracker }) {
-  console.log({ placeableShips, playerGridTracker })
   const setupView = createSetupView(placeableShips, playerGridTracker)
   render(setupView)
   pubSub.publish('setupRendered')

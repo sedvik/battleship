@@ -47,6 +47,21 @@ main {
 }
 
 /* Grid Styles */
+#main-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
 
 .grid {
   display: flex;
@@ -166,4 +181,18 @@ input[type="text"] {
   height: 50px;
   width: 80px;
   font-size: 1.3rem;
+}
+
+/* Main Reset Button */
+#main-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#reset-game {
+  font-size: 1.2rem;
+  height: 35px;
+  width: 150px;
 }

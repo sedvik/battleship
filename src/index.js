@@ -4,6 +4,6 @@ import events from './modules/events.js'
 import './css/reset.css'
 import './css/style.css'
 
-displayController.init()
-events.init()
-game.setup()
+// displayController.init()
+// events.init()
+// game.setup()
