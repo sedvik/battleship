@@ -1,5 +1,10 @@
 import pubSub from './pubSub'
 import createSetupView from '../views/setupView.js'
+import createMainView from '../views/mainView.js'
+
+/*
+ * Private
+ */
 
 // Renders setup of first player's board
 function renderSetup ({ placeableShips, playerGridTracker }) {
@@ -9,8 +14,11 @@ function renderSetup ({ placeableShips, playerGridTracker }) {
 }
 
 // Renders main battleship game, including player's board and tracker of enemy's grid
-function renderMain (data) {
-  console.log('Main', data)
+function renderMain ({ playerGridTracker, enemyGridTracker, activePlayer }) {
+  console.log({ activePlayer, playerGridTracker, enemyGridTracker })
+  const mainView = createMainView(playerGridTracker, enemyGridTracker)
+  render(mainView)
+  pubSub.publish('mainRendered', activePlayer)
 }
 
 // Renders end screen after a player has won
@@ -28,6 +36,10 @@ function render (view) {
   main.textContent = ''
   main.appendChild(view)
 }
+
+/*
+ * Public
+ */
 
 function init () {
   pubSub.subscribe('setupStart', renderSetup)
