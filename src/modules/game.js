@@ -30,6 +30,7 @@ function switchGameboards () {
 function extractGameData (gameState) {
   // Extract player 0's (human player) enemyGridTracker and their own grid tracker
   const gameData = {
+    activePlayer: gameState.activePlayer,
     playerGridTracker: convertGameboardToTracker(gameState.gameboards[0]),
     placeableShips: gameState.gameboards[0].placeableShips,
     enemyGridTracker: gameState.players[0].enemyGridTracker
