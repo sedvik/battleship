@@ -9,13 +9,13 @@ import { convertGameboardToTracker } from './util.js'
 
 let gameState
 
-function switchActivePlayer () {
+function switchActivePlayerNum () {
   gameState.activePlayer === 0
     ? gameState.activePlayer = 1
     : gameState.activePlayer = 0
 }
 
-function switchGameboards () {
+function switchGameboardNums () {
   // Swap active gameboard
   gameState.activePlayerGameboard === 0
     ? gameState.activePlayerGameboard = 1
@@ -40,7 +40,11 @@ function extractGameData (gameState) {
 }
 
 function end () {
-  pubSub.publish('gameEnd', extractGameData(gameState))
+  const endMessage = gameState.activePlayer === 0
+    ? 'You win! Click the "Reset Game" button to play again.'
+    : 'You lost! Click the "Reset Game" button to play again.'
+  pubSub.publish('alert', endMessage)
+  pubSub.publish('gameEnd')
 }
 
 /*
@@ -103,8 +107,8 @@ function start () {
 
 // Plays a single round of battleship
 function playRound (coordinate) {
-  const activePlayer = gameState.players[gameState.activePlayer]
-  const enemyGameboard = gameState.gameboards[gameState.enemyPlayerGameboard]
+  let activePlayer = gameState.players[gameState.activePlayer]
+  let enemyGameboard = gameState.gameboards[gameState.enemyPlayerGameboard]
 
   // Attack the enemy gameboard
   if (activePlayer.isComputer) {
@@ -115,12 +119,17 @@ function playRound (coordinate) {
 
   // Check if there is a winner after attacking
   if (enemyGameboard.allShipsSunk()) {
+    pubSub.publish('roundPlayed', extractGameData(gameState))
     return end()
   }
 
-  // Switch active players and gameboards
-  switchActivePlayer()
-  switchGameboards()
+  // Switch active players and gameboards numbers
+  switchActivePlayerNum()
+  switchGameboardNums()
+
+  // Reassign the active player and enemy gameboard
+  activePlayer = gameState.players[gameState.activePlayer]
+  enemyGameboard = gameState.gameboards[gameState.enemyPlayerGameboard]
 
   // Publish game state
   pubSub.publish('roundPlayed', extractGameData(gameState))

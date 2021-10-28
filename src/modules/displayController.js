@@ -15,15 +15,9 @@ function renderSetup ({ placeableShips, playerGridTracker }) {
 
 // Renders main battleship game, including player's board and tracker of enemy's grid
 function renderMain ({ playerGridTracker, enemyGridTracker, activePlayer }) {
-  console.log({ activePlayer, playerGridTracker, enemyGridTracker })
   const mainView = createMainView(playerGridTracker, enemyGridTracker)
   render(mainView)
   pubSub.publish('mainRendered', activePlayer)
-}
-
-// Renders end screen after a player has won
-function renderEnd (data) {
-  console.log('End', data)
 }
 
 function renderMessage (message) {
@@ -46,7 +40,6 @@ function init () {
   pubSub.subscribe('shipPlaced', renderSetup)
   pubSub.subscribe('gameStart', renderMain)
   pubSub.subscribe('roundPlayed', renderMain)
-  pubSub.subscribe('gameEnd', renderEnd)
   pubSub.subscribe('alert', renderMessage)
 }
 

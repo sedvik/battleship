@@ -67,7 +67,11 @@ function assignMainEvents (activePlayer) {
 }
 
 function assignEndEvents () {
-
+  // Make it so that click events on grid spaces cannot be clicked after the game ends
+  const gridSpaces = document.querySelectorAll('.enemy .empty')
+  gridSpaces.forEach(space => {
+    space.style.pointerEvents = 'none'
+  })
 }
 
 /*
@@ -78,6 +82,7 @@ function assignEndEvents () {
 function init () {
   pubSub.subscribe('setupRendered', assignSetupEvents)
   pubSub.subscribe('mainRendered', assignMainEvents)
+  pubSub.subscribe('gameEnd', assignEndEvents)
 }
 
 const events = {
