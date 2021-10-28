@@ -107,10 +107,10 @@ function createGridColumns (playerGridTracker) {
  * Public
  */
 
-function createPlayerGrid (playerGridTracker) {
+function createPlayerGrid (playerGridTracker, gridType) {
   // Parent
   const playerGridDiv = domUtil.create('div', '', {
-    class: ['player', 'grid']
+    class: [gridType, 'grid']
   })
 
   // Children

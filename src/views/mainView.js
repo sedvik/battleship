@@ -5,7 +5,7 @@ import { createPlayerGrid } from './grid.js'
  * Private
  */
 
-function createGridContainer (gridTracker, title) {
+function createGridContainer (gridTracker, title, gridType) {
   // Parent
   const gridContainer = domUtil.create('div', '', {
     class: 'grid-container'
@@ -13,7 +13,7 @@ function createGridContainer (gridTracker, title) {
 
   // Children
   const gridTitle = domUtil.create('h2', title)
-  const grid = createPlayerGrid(gridTracker)
+  const grid = createPlayerGrid(gridTracker, gridType)
   const children = [gridTitle, grid]
 
   // Append children to parent
@@ -44,8 +44,8 @@ function createMainContainer (playerGridTracker, enemyGridTracker) {
   })
 
   // Children
-  const playerGridContainer = createGridContainer(playerGridTracker, 'Your Grid')
-  const enemyGridContainer = createGridContainer(enemyGridTracker, 'Enemy Grid')
+  const playerGridContainer = createGridContainer(playerGridTracker, 'Your Grid', 'player')
+  const enemyGridContainer = createGridContainer(enemyGridTracker, 'Enemy Grid', 'enemy')
   const children = [playerGridContainer, enemyGridContainer]
 
   // Append children to parent

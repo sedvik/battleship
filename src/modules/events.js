@@ -30,6 +30,15 @@ function start () {
   game.start()
 }
 
+function playGameRound (e) {
+  const coordinate = e.target.getAttribute('data-coordinate')
+  game.playRound(coordinate)
+}
+
+function reset () {
+  game.setup()
+}
+
 function assignSetupEvents () {
   const resetBtn = document.querySelector('#reset-board')
   resetBtn.addEventListener('click', resetBoard)
@@ -46,8 +55,15 @@ function assignSetupEvents () {
   }
 }
 
-function assignMainEvents () {
+function assignMainEvents (activePlayer) {
+  // If the active player is the human player and not a computer, assign click events to empty enemy grid spaces
+  if (activePlayer === 0) {
+    const gridSpaces = document.querySelectorAll('.enemy .empty')
+    gridSpaces.forEach(space => space.addEventListener('click', playGameRound))
+  }
 
+  const resetBtn = document.querySelector('#reset-game')
+  resetBtn.addEventListener('click', reset)
 }
 
 function assignEndEvents () {
@@ -61,6 +77,7 @@ function assignEndEvents () {
 // Create pubsub subscriptions
 function init () {
   pubSub.subscribe('setupRendered', assignSetupEvents)
+  pubSub.subscribe('mainRendered', assignMainEvents)
 }
 
 const events = {
